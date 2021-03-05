@@ -266,7 +266,7 @@ Cake_Start(){
 	/opt/sbin/tc qdisc del dev ${iface} ingress 2>/dev/null
 	/opt/sbin/tc qdisc add dev ${iface} handle ffff: ingress
 	/opt/sbin/tc qdisc del dev ifb9${iface} root 2>/dev/null
-	/opt/sbin/tc qdisc add dev ifb9${iface} root cake bandwidth "${dlspeed}Mbit" nat wash ingress "$queueprio" $optionsdl # options needs to be left unquoted to support multiple extra parameters
+	/opt/sbin/tc qdisc add dev ifb9${iface} root cake bandwidth "${dlspeed}Mbit" nat wash "$queueprio" $optionsdl # options needs to be left unquoted to support multiple extra parameters
 	ifconfig ifb9${iface} up
 	/opt/sbin/tc filter add dev ${iface} parent ffff: protocol all prio 10 u32 match u32 0 0 flowid 1:1 action mirred egress redirect dev ifb9${iface}
 }
